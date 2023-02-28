@@ -18,22 +18,25 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\screen_logo.cpp">
+    <ClCompile Include="src\logo_screen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\screen_title.cpp">
+    <ClCompile Include="src\title_screen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\screen_options.cpp">
+    <ClCompile Include="src\options_screen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\screen_gameplay.cpp">
+    <ClCompile Include="src\gameplay_screen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\screen_ending.cpp">
+    <ClCompile Include="src\ending_screen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\screen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -152,10 +155,25 @@
     <ClInclude Include="src\include\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\screens.hpp">
+    <ClInclude Include="src\screen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\game.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\logo_screen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\title_screen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\options_screen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameplay_screen.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ending_screen.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

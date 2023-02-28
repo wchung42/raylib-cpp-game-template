@@ -1,8 +1,14 @@
 #include "raylib.h"
 #include "./include/raylib-cpp.hpp"
 #include "game.hpp"
-#include "screens.hpp"
+#include "screen.hpp"
+#include "logo_screen.hpp"
+#include "title_screen.hpp"
+#include "gameplay_screen.hpp"
+#include "options_screen.hpp"
+#include "ending_screen.hpp"
 #include <iostream>
+#include <memory>
 
 Game::Game() {};
 
@@ -15,7 +21,8 @@ void Game::Initialize()
 	
     // Setup and init first screen
     m_currentScreen = LOGO;
-    InitLogoScreen();
+    m_screen = std::make_unique<LogoScreen>();
+    m_screen->InitScreen();
 
     m_window.SetTargetFPS(m_targetFPS);       // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -45,46 +52,38 @@ void Game::UpdateGame(float deltaTime)
 	// Update game variables
     if (!m_onTransition)
     {
+        m_screen->UpdateScreen();
+        int nextScreen {m_screen->GetFinishScreen()};
         switch (m_currentScreen)
         {
-        case LOGO:
-        {
-            UpdateLogoScreen();
+            case LOGO:
+            {
+                if (nextScreen) TransitionToScreen(TITLE);
 
-            if (FinishLogoScreen()) TransitionToScreen(TITLE);
+            } break;
+            case TITLE:
+            {
+                if (nextScreen == 1) TransitionToScreen(OPTIONS);
+                else if (nextScreen == 2) TransitionToScreen(GAMEPLAY);
 
-        } break;
-        case TITLE:
-        {
-            UpdateTitleScreen();
+            } break;
+            case OPTIONS:
+            {
+                if (nextScreen) TransitionToScreen(TITLE);
 
-            if (FinishTitleScreen() == 1) TransitionToScreen(OPTIONS);
-            else if (FinishTitleScreen() == 2) TransitionToScreen(GAMEPLAY);
+            } break;
+            case GAMEPLAY:
+            {
+                if (nextScreen) TransitionToScreen(ENDING);
+                //else if (FinishGameplayScreen() == 2) TransitionToScreen(TITLE);
 
-        } break;
-        case OPTIONS:
-        {
-            UpdateOptionsScreen();
+            } break;
+            case ENDING:
+            {
+                if (nextScreen) TransitionToScreen(TITLE);
 
-            if (FinishOptionsScreen()) TransitionToScreen(TITLE);
-
-        } break;
-        case GAMEPLAY:
-        {
-            UpdateGameplayScreen();
-
-            if (FinishGameplayScreen() == 1) TransitionToScreen(ENDING);
-            //else if (FinishGameplayScreen() == 2) TransitionToScreen(TITLE);
-
-        } break;
-        case ENDING:
-        {
-            UpdateEndingScreen();
-
-            if (FinishEndingScreen() == 1) TransitionToScreen(TITLE);
-
-        } break;
-        default: break;
+            } break;
+            default: break;
         }
     }
     else UpdateTransition();    // Update transition (fade-in, fade-out)
@@ -97,15 +96,17 @@ void Game::RenderGame()
 		m_window.ClearBackground(RAYWHITE);
 		//m_textColor.DrawText("Congrats! You created your first window!", 190, 200, 20);
 
-        switch (m_currentScreen)
-            {
+        /*switch (m_currentScreen)
+        {
             case LOGO: DrawLogoScreen(); break;
             case TITLE: DrawTitleScreen(); break;
             case OPTIONS: DrawOptionsScreen(); break;
             case GAMEPLAY: DrawGameplayScreen(); break;
             case ENDING: DrawEndingScreen(); break;
             default: break;
-        }
+        }*/
+
+        m_screen->DrawScreen();
 
         // Draw full screen rectangle in front of everything
         if (m_onTransition) DrawTransition();
@@ -116,25 +117,30 @@ void Game::RenderGame()
 void Game::ChangeToScreen(GameScreen screen)
 {
     // Unload current screen
-    switch (m_currentScreen)
-    {
-        case LOGO: UnloadLogoScreen(); break;
-        case TITLE: UnloadTitleScreen(); break;
-        case GAMEPLAY: UnloadGameplayScreen(); break;
-        case ENDING: UnloadEndingScreen(); break;
-        default: break;
-    }
+    m_screen->UnloadScreen();
 
     // Init next screen
     switch (screen)
     {
-        case LOGO: InitLogoScreen(); break;
-        case TITLE: InitTitleScreen(); break;
-        case GAMEPLAY: InitGameplayScreen(); break;
-        case ENDING: InitEndingScreen(); break;
+        case LOGO: 
+        {
+            m_screen = std::make_unique<LogoScreen>();
+        } break;
+        case TITLE:
+        {
+            m_screen = std::make_unique<TitleScreen>();
+        } break;
+        case GAMEPLAY: 
+        {
+            m_screen = std::make_unique<GameplayScreen>();
+        } break;
+        case ENDING: 
+        {
+            m_screen = std::make_unique<EndingScreen>();
+        } break;
         default: break;
     }
-
+    m_screen->InitScreen();
     m_currentScreen = screen;
 }
 
@@ -162,25 +168,30 @@ void Game::UpdateTransition(void)
             m_transAlpha = 1.0f;
 
             // Unload current screen
-            switch (m_transFromScreen)
-            {
-                case LOGO: UnloadLogoScreen(); break;
-                case TITLE: UnloadTitleScreen(); break;
-                case OPTIONS: UnloadOptionsScreen(); break;
-                case GAMEPLAY: UnloadGameplayScreen(); break;
-                case ENDING: UnloadEndingScreen(); break;
-                default: break;
-            }
+            m_screen->UnloadScreen();
 
             // Load next screen
             switch (m_transToScreen)
             {
-                case LOGO: InitLogoScreen(); break;
-                case TITLE: InitTitleScreen(); break;
-                case GAMEPLAY: InitGameplayScreen(); break;
-                case ENDING: InitEndingScreen(); break;
+                case LOGO:
+                {
+                    m_screen = std::make_unique<LogoScreen>();
+                } break;
+                case TITLE:
+                {
+                    m_screen = std::make_unique<TitleScreen>();
+                } break;
+                case GAMEPLAY:
+                {
+                    m_screen = std::make_unique<GameplayScreen>();
+                } break;
+                case ENDING:
+                {
+                    m_screen = std::make_unique<EndingScreen>();
+                } break;
                 default: break;
             }
+            m_screen->InitScreen();
 
             m_currentScreen = m_transToScreen;
 

@@ -1,1 +1,22 @@
-﻿C:\dev\cpp\Games\raylib-game-template\raylib-game-template\raylib-game-template.vcxproj : error MSB4025: The project file could not be loaded. Could not find file 'C:\dev\cpp\Games\raylib-game-template\raylib-game-template\raylib-game-template.vcxproj'.
+﻿  ending_screen.cpp
+C:\dev\cpp\Games\raylib-game-template\src\ending_screen.cpp(37,79): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\dev\cpp\Games\raylib-game-template\src\ending_screen.cpp(37,57): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\dev\cpp\Games\raylib-game-template\src\ending_screen.cpp(39,122): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\dev\cpp\Games\raylib-game-template\src\ending_screen.cpp(39,94): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  game.cpp
+  gameplay_screen.cpp
+C:\dev\cpp\Games\raylib-game-template\src\gameplay_screen.cpp(36,81): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\dev\cpp\Games\raylib-game-template\src\gameplay_screen.cpp(36,59): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\dev\cpp\Games\raylib-game-template\src\gameplay_screen.cpp(38,121): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\dev\cpp\Games\raylib-game-template\src\gameplay_screen.cpp(38,93): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  logo_screen.cpp
+  main.cpp
+  options_screen.cpp
+  screen.cpp
+  title_screen.cpp
+C:\dev\cpp\Games\raylib-game-template\src\title_screen.cpp(37,78): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\dev\cpp\Games\raylib-game-template\src\title_screen.cpp(37,56): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\dev\cpp\Games\raylib-game-template\src\title_screen.cpp(39,123): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\dev\cpp\Games\raylib-game-template\src\title_screen.cpp(39,95): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  raylib-game-template.vcxproj -> C:\dev\cpp\Games\raylib-game-template\bin\Win32\Debug\raylib-game-template.exe
