@@ -10,6 +10,8 @@ void Screen::InitScreen()
 {
 	// Initialize screen
 
+	// TODO: Load textures
+
 }
 
 void Screen::UpdateScreen()

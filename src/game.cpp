@@ -27,8 +27,6 @@ void Game::Initialize()
     m_window.SetTargetFPS(m_targetFPS);       // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
-	// TODO: Load textures
-
 }
 
 
@@ -50,43 +48,46 @@ void Game::Shutdown()
 void Game::UpdateGame(float deltaTime)
 {
 	// Update game variables
-    if (!m_onTransition)
+    if (m_onTransition)
     {
-        m_screen->UpdateScreen();
-        int nextScreen {m_screen->GetFinishScreen()};
-        switch (m_currentScreen)
-        {
-            case LOGO:
-            {
-                if (nextScreen) TransitionToScreen(TITLE);
-
-            } break;
-            case TITLE:
-            {
-                if (nextScreen == 1) TransitionToScreen(OPTIONS);
-                else if (nextScreen == 2) TransitionToScreen(GAMEPLAY);
-
-            } break;
-            case OPTIONS:
-            {
-                if (nextScreen) TransitionToScreen(TITLE);
-
-            } break;
-            case GAMEPLAY:
-            {
-                if (nextScreen) TransitionToScreen(ENDING);
-                //else if (FinishGameplayScreen() == 2) TransitionToScreen(TITLE);
-
-            } break;
-            case ENDING:
-            {
-                if (nextScreen) TransitionToScreen(TITLE);
-
-            } break;
-            default: break;
-        }
+        UpdateTransition(); // Update transition (fade-in, fade-out)
+        return;
     }
-    else UpdateTransition();    // Update transition (fade-in, fade-out)
+
+    m_screen->UpdateScreen();
+    int nextScreen {m_screen->GetFinishScreen()};
+    switch (m_currentScreen)
+    {
+        case LOGO:
+        {
+            if (nextScreen) TransitionToScreen(TITLE);
+
+        } break;
+        case TITLE:
+        {
+            if (nextScreen == 1) TransitionToScreen(OPTIONS);
+            else if (nextScreen == 2) TransitionToScreen(GAMEPLAY);
+
+        } break;
+        case OPTIONS:
+        {
+            if (nextScreen) TransitionToScreen(TITLE);
+
+        } break;
+        case GAMEPLAY:
+        {
+            if (nextScreen) TransitionToScreen(ENDING);
+            //else if (FinishGameplayScreen() == 2) TransitionToScreen(TITLE);
+
+        } break;
+        case ENDING:
+        {
+            if (nextScreen) TransitionToScreen(TITLE);
+
+        } break;
+        default: break;
+    }
+    
     //----------------------------------------------------------------------------------
 }
 
@@ -94,18 +95,6 @@ void Game::RenderGame()
 {
 	BeginDrawing();
 		m_window.ClearBackground(RAYWHITE);
-		//m_textColor.DrawText("Congrats! You created your first window!", 190, 200, 20);
-
-        /*switch (m_currentScreen)
-        {
-            case LOGO: DrawLogoScreen(); break;
-            case TITLE: DrawTitleScreen(); break;
-            case OPTIONS: DrawOptionsScreen(); break;
-            case GAMEPLAY: DrawGameplayScreen(); break;
-            case ENDING: DrawEndingScreen(); break;
-            default: break;
-        }*/
-
         m_screen->DrawScreen();
 
         // Draw full screen rectangle in front of everything

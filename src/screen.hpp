@@ -21,5 +21,6 @@ public:
 	virtual void DrawScreen();
 	virtual void UnloadScreen();
 
-	int GetFinishScreen() const { return m_finishScreen; } // 
+	int GetFinishScreen() const { return m_finishScreen; } // Return the next screen
+
 };
