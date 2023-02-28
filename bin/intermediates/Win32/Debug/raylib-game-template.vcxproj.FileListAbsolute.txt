@@ -1,1 +1,2 @@
+C:\dev\cpp\Games\raylib-game-template\bin\Win32\Debug\raylib.dll
 C:\dev\cpp\Games\raylib-game-template\bin\intermediates\Win32\Debug\raylib-game-template.vcxproj.CopyComplete

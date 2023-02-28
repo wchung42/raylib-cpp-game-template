@@ -1,6 +1,6 @@
 #include "raylib.h"
 #include "./include/raylib-cpp.hpp"
-#include "screens.hpp"
+#include "screen.hpp"
 #include "game.hpp"
 #include <iostream>
 

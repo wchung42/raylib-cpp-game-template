@@ -2,8 +2,9 @@
 
 #include "raylib.h"
 #include "./include/raylib-cpp.hpp"
+#include "screen.hpp"
 #include <string>
-#include "screens.hpp"
+#include <memory>
 
 class Game
 {
@@ -19,6 +20,7 @@ private:
 	bool m_onTransition {};
 	bool m_transFadeOut {};
 	int m_transFromScreen {-1};
+	std::unique_ptr<Screen> m_screen;
 	GameScreen m_transToScreen = UNKNOWN;
 public:
 	Game();
