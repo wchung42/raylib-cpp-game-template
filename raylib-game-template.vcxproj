@@ -144,18 +144,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\game.cpp" />
-    <ClCompile Include="src\ending_screen.cpp" />
-    <ClCompile Include="src\gameplay_screen.cpp" />
-    <ClCompile Include="src\logo_screen.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\options_screen.cpp" />
     <ClCompile Include="src\screen.cpp" />
-    <ClCompile Include="src\title_screen.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\ending_screen.hpp" />
     <ClInclude Include="src\game.hpp" />
-    <ClInclude Include="src\gameplay_screen.hpp" />
     <ClInclude Include="src\include\AudioDevice.hpp" />
     <ClInclude Include="src\include\AudioStream.hpp" />
     <ClInclude Include="src\include\BoundingBox.hpp" />
@@ -177,6 +170,7 @@
     <ClInclude Include="src\include\RayCollision.hpp" />
     <ClInclude Include="src\include\raylib-cpp-utils.hpp" />
     <ClInclude Include="src\include\raylib-cpp.hpp" />
+    <ClInclude Include="src\include\raylib.h" />
     <ClInclude Include="src\include\raylib.hpp" />
     <ClInclude Include="src\include\RaylibException.hpp" />
     <ClInclude Include="src\include\raymath.hpp" />
@@ -194,10 +188,10 @@
     <ClInclude Include="src\include\VrStereoConfig.hpp" />
     <ClInclude Include="src\include\Wave.hpp" />
     <ClInclude Include="src\include\Window.hpp" />
-    <ClInclude Include="src\options_screen.hpp" />
     <ClInclude Include="src\screen.hpp" />
-    <ClInclude Include="src\logo_screen.hpp" />
-    <ClInclude Include="src\title_screen.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="lib\libraylib.a" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "raylib.h"
-#include "./include/raylib-cpp.hpp"
+#include "include/raylib.h"
+#include "include/raylib-cpp.hpp"
 
 //----------------------------------------------------------------------------------
-// Types and Structures Definition
+// Base Screen class declaration
 //----------------------------------------------------------------------------------
 typedef enum GameScreen { UNKNOWN = -1, LOGO = 0, TITLE, OPTIONS, GAMEPLAY, ENDING } GameScreen;
 
@@ -12,15 +12,89 @@ class Screen
 {
 protected:
 	int m_framesCounter {};
-	int m_finishScreen {};
+	int m_nextScreen {};
 public:
 	Screen();
 	~Screen();
-	virtual void InitScreen();
-	virtual void UpdateScreen();
-	virtual void DrawScreen();
-	virtual void UnloadScreen();
+	virtual void updateScreen(float deltaTime);
+	virtual void drawScreen();
 
-	int GetFinishScreen() const { return m_finishScreen; } // Return the next screen
+	int getNextScreen() const { return m_nextScreen; } // Return the next screen
 
+};
+
+
+//----------------------------------------------------------------------------------
+// Logo Screen class declaration
+//----------------------------------------------------------------------------------
+class LogoScreen : public Screen
+{
+private:
+	int m_logoPositionX {};
+	int m_logoPositionY {};
+	int m_lettersCount {};
+	int m_topSideRecWidth {};
+	int m_leftSideRecHeight {};
+	int m_bottomSideRecWidth {};
+	int m_rightSideRecHeight {};
+	int m_state {};				// Logo animation states
+	float m_alpha {1.0f};         // Useful for fading
+public:
+	LogoScreen();
+	~LogoScreen();
+	void updateScreen(float deltaTime) override;
+	void drawScreen() override;
+};
+
+
+//----------------------------------------------------------------------------------
+// Title Screen class declaration
+//----------------------------------------------------------------------------------
+class TitleScreen : public Screen
+{
+private:
+public:
+	TitleScreen();
+	~TitleScreen();
+	void updateScreen(float deltaTime) override;
+	void drawScreen() override;
+};
+
+
+//----------------------------------------------------------------------------------
+// Options Screen class declaration
+//----------------------------------------------------------------------------------
+class OptionsScreen : public Screen
+{
+public:
+	OptionsScreen();
+	~OptionsScreen();
+	void updateScreen(float deltaTime);
+	void drawScreen();
+};
+
+
+//----------------------------------------------------------------------------------
+// Gameplay Screen class declaration
+//----------------------------------------------------------------------------------
+class GameplayScreen : public Screen
+{
+public:
+	GameplayScreen();
+	~GameplayScreen();
+	void updateScreen(float deltaTime) override;
+	void drawScreen();
+};
+
+
+//----------------------------------------------------------------------------------
+// Ending Screen class declaration
+//----------------------------------------------------------------------------------
+class EndingScreen : public Screen
+{
+public:
+	EndingScreen();
+	~EndingScreen();
+	void updateScreen(float deltaTime) override;
+	void drawScreen();
 };

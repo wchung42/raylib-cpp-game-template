@@ -1,7 +1,5 @@
 #pragma once
 
-#include "raylib.h"
-#include "./include/raylib-cpp.hpp"
 #include "screen.hpp"
 #include <string>
 #include <memory>
@@ -26,17 +24,17 @@ public:
 	Game();
 	~Game();
 	// Initialize the game
-	void Initialize();
+	void initialize();
 	// Run the game loop
-	void RunLoop();
+	void runLoop();
 	// Shutdown game properly
-	void Shutdown();
+	void shutdown();
 private:
 	// Helper functions for running the game loop
-	void UpdateGame(float deltaTime);
-	void RenderGame();
-	void ChangeToScreen(GameScreen screen);		// Change to screen, no transition effect
-	void TransitionToScreen(GameScreen screen); // Request transition to next screen
-	void UpdateTransition();					// Update transition effect
-	void DrawTransition();						// Draw transition effect (fullscreen rectangle)
+	void updateGame(float deltaTime);
+	void renderGame();
+	void changeToScreen(GameScreen screen);		// Change to screen, no transition effect
+	void transitionToScreen(GameScreen screen); // Request transition to next screen
+	void updateTransition();					// Update transition effect
+	void drawTransition();						// Draw transition effect (fullscreen rectangle)
 };

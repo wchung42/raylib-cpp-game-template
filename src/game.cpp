@@ -1,12 +1,5 @@
-#include "raylib.h"
-#include "./include/raylib-cpp.hpp"
 #include "game.hpp"
 #include "screen.hpp"
-#include "logo_screen.hpp"
-#include "title_screen.hpp"
-#include "gameplay_screen.hpp"
-#include "options_screen.hpp"
-#include "ending_screen.hpp"
 #include <iostream>
 #include <memory>
 
@@ -14,7 +7,7 @@ Game::Game() {};
 
 Game::~Game() {};
 
-void Game::Initialize()
+void Game::initialize()
 {
     // Initialize window
 	m_window.raylib::Window::Init(m_windowWidth, m_windowHeight, m_title);
@@ -22,7 +15,6 @@ void Game::Initialize()
     // Setup and init first screen
     m_currentScreen = LOGO;
     m_screen = std::make_unique<LogoScreen>();
-    m_screen->InitScreen();
 
     m_window.SetTargetFPS(m_targetFPS);       // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
@@ -30,59 +22,59 @@ void Game::Initialize()
 }
 
 
-void Game::RunLoop()
+void Game::runLoop()
 {
 	while (!m_window.ShouldClose())
 	{
 		const float dT = m_window.GetFrameTime();
-		UpdateGame(dT);
-		RenderGame();
+		updateGame(dT);
+		renderGame();
 	}
 }
 
-void Game::Shutdown()
+void Game::shutdown()
 {
 	m_window.Close();
 }
 
-void Game::UpdateGame(float deltaTime)
+void Game::updateGame(float deltaTime)
 {
 	// Update game variables
     if (m_onTransition)
     {
-        UpdateTransition(); // Update transition (fade-in, fade-out)
+        updateTransition(); // Update transition (fade-in, fade-out)
         return;
     }
 
-    m_screen->UpdateScreen();
-    int nextScreen {m_screen->GetFinishScreen()};
+    m_screen->updateScreen(deltaTime);
+    int nextScreen {m_screen->getNextScreen()};
     switch (m_currentScreen)
     {
         case LOGO:
         {
-            if (nextScreen) TransitionToScreen(TITLE);
+            if (nextScreen) transitionToScreen(TITLE);
 
         } break;
         case TITLE:
         {
-            if (nextScreen == 1) TransitionToScreen(OPTIONS);
-            else if (nextScreen == 2) TransitionToScreen(GAMEPLAY);
+            if (nextScreen == 1) transitionToScreen(OPTIONS);
+            else if (nextScreen == 2) transitionToScreen(GAMEPLAY);
 
         } break;
         case OPTIONS:
         {
-            if (nextScreen) TransitionToScreen(TITLE);
+            if (nextScreen) transitionToScreen(TITLE);
 
         } break;
         case GAMEPLAY:
         {
-            if (nextScreen) TransitionToScreen(ENDING);
-            //else if (FinishGameplayScreen() == 2) TransitionToScreen(TITLE);
+            if (nextScreen) transitionToScreen(ENDING);
+            //else if (FinishGameplayScreen() == 2) transitionToScreen(TITLE);
 
         } break;
         case ENDING:
         {
-            if (nextScreen) TransitionToScreen(TITLE);
+            if (nextScreen) transitionToScreen(TITLE);
 
         } break;
         default: break;
@@ -91,23 +83,20 @@ void Game::UpdateGame(float deltaTime)
     //----------------------------------------------------------------------------------
 }
 
-void Game::RenderGame()
+void Game::renderGame()
 {
 	BeginDrawing();
 		m_window.ClearBackground(RAYWHITE);
-        m_screen->DrawScreen();
+        m_screen->drawScreen();
 
         // Draw full screen rectangle in front of everything
-        if (m_onTransition) DrawTransition();
+        if (m_onTransition) drawTransition();
 	EndDrawing();
 }
 
 // Change to next screen, no transition
-void Game::ChangeToScreen(GameScreen screen)
+void Game::changeToScreen(GameScreen screen)
 {
-    // Unload current screen
-    m_screen->UnloadScreen();
-
     // Init next screen
     switch (screen)
     {
@@ -129,12 +118,11 @@ void Game::ChangeToScreen(GameScreen screen)
         } break;
         default: break;
     }
-    m_screen->InitScreen();
     m_currentScreen = screen;
 }
 
 // Request transition to next screen
-void Game::TransitionToScreen(GameScreen screen)
+void Game::transitionToScreen(GameScreen screen)
 {
     m_onTransition = true;
     m_transFadeOut = false;
@@ -144,7 +132,7 @@ void Game::TransitionToScreen(GameScreen screen)
 }
 
 // Update transition effect (fade-in, fade-out)
-void Game::UpdateTransition(void)
+void Game::updateTransition()
 {
     if (!m_transFadeOut)
     {
@@ -155,9 +143,6 @@ void Game::UpdateTransition(void)
         if (m_transAlpha > 1.01f)
         {
             m_transAlpha = 1.0f;
-
-            // Unload current screen
-            m_screen->UnloadScreen();
 
             // Load next screen
             switch (m_transToScreen)
@@ -180,7 +165,6 @@ void Game::UpdateTransition(void)
                 } break;
                 default: break;
             }
-            m_screen->InitScreen();
 
             m_currentScreen = m_transToScreen;
 
@@ -204,7 +188,7 @@ void Game::UpdateTransition(void)
 }
 
 // Draw transition effect (full-screen rectangle)
-void Game::DrawTransition(void)
+void Game::drawTransition(void)
 {
     DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, m_transAlpha));
 }
