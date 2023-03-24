@@ -1,6 +1,8 @@
 #pragma once
 
 #include "screen.hpp"
+#include "texture_manager.hpp"
+#include "sound_manager.hpp"
 #include <string>
 #include <memory>
 
@@ -20,6 +22,10 @@ private:
 	int m_transFromScreen {-1};
 	std::unique_ptr<Screen> m_screen;
 	GameScreen m_transToScreen = UNKNOWN;
+
+	// Resource managers
+	std::shared_ptr<TextureManager> m_textureManager;
+	std::shared_ptr<SoundManager> m_soundManager;
 public:
 	Game();
 	~Game();

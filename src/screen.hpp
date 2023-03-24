@@ -2,6 +2,9 @@
 
 #include "include/raylib.h"
 #include "include/raylib-cpp.hpp"
+#include "texture_manager.hpp"
+#include "sound_manager.hpp"
+#include <memory>
 
 //----------------------------------------------------------------------------------
 // Base Screen class declaration
@@ -13,8 +16,10 @@ class Screen
 protected:
 	int m_framesCounter {};
 	int m_nextScreen {};
+	std::shared_ptr<TextureManager> m_textureManager;
+	std::shared_ptr<SoundManager> m_soundManager;
 public:
-	Screen();
+	Screen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager);
 	~Screen();
 	virtual void updateScreen(float deltaTime);
 	virtual void drawScreen();
@@ -40,7 +45,7 @@ private:
 	int m_state {};				// Logo animation states
 	float m_alpha {1.0f};         // Useful for fading
 public:
-	LogoScreen();
+	LogoScreen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager);
 	~LogoScreen();
 	void updateScreen(float deltaTime) override;
 	void drawScreen() override;
@@ -54,7 +59,7 @@ class TitleScreen : public Screen
 {
 private:
 public:
-	TitleScreen();
+	TitleScreen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager);
 	~TitleScreen();
 	void updateScreen(float deltaTime) override;
 	void drawScreen() override;
@@ -67,7 +72,7 @@ public:
 class OptionsScreen : public Screen
 {
 public:
-	OptionsScreen();
+	OptionsScreen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager);
 	~OptionsScreen();
 	void updateScreen(float deltaTime);
 	void drawScreen();
@@ -80,7 +85,7 @@ public:
 class GameplayScreen : public Screen
 {
 public:
-	GameplayScreen();
+	GameplayScreen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager);
 	~GameplayScreen();
 	void updateScreen(float deltaTime) override;
 	void drawScreen();
@@ -93,7 +98,7 @@ public:
 class EndingScreen : public Screen
 {
 public:
-	EndingScreen();
+	EndingScreen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager);
 	~EndingScreen();
 	void updateScreen(float deltaTime) override;
 	void drawScreen();

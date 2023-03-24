@@ -1,8 +1,19 @@
 #include "screen.hpp"
 
-Screen::Screen() {}
+//----------------------------------------------------------------------------------
+// Base Screen class definitions
+//----------------------------------------------------------------------------------
 
-Screen::~Screen() {}
+Screen::Screen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager) 
+    : m_textureManager(textureManager), m_soundManager(soundManager)
+{
+
+}
+
+Screen::~Screen() 
+{
+
+}
 
 void Screen::updateScreen(float deltaTime)
 {
@@ -19,7 +30,8 @@ void Screen::drawScreen()
 // Logo Screen class definitions
 //----------------------------------------------------------------------------------
 
-LogoScreen::LogoScreen()
+LogoScreen::LogoScreen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager)
+    : Screen(textureManager, soundManager)
 {
     m_lettersCount = 0;
 
@@ -137,7 +149,8 @@ void LogoScreen::drawScreen(void)
 // Options Screen Functions Definition
 //----------------------------------------------------------------------------------
 
-OptionsScreen::OptionsScreen()
+OptionsScreen::OptionsScreen(std::shared_ptr<TextureManager> textureManager,  std::shared_ptr<SoundManager> soundManager)
+    : Screen(textureManager, soundManager)
 {
  
 }
@@ -162,7 +175,8 @@ void OptionsScreen::drawScreen()
 // Title Screen Class Definition
 //----------------------------------------------------------------------------------
 
-TitleScreen::TitleScreen()
+TitleScreen::TitleScreen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager)
+    : Screen(textureManager, soundManager)
 {
 
 }
@@ -199,7 +213,8 @@ void TitleScreen::drawScreen()
 // Gameplay Screen Functions Definition
 //----------------------------------------------------------------------------------
 
-GameplayScreen::GameplayScreen()
+GameplayScreen::GameplayScreen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager)
+    : Screen(textureManager, soundManager)
 {
 
 }
@@ -236,7 +251,8 @@ void GameplayScreen::drawScreen()
 // Ending Screen Functions Definition
 //----------------------------------------------------------------------------------
 
-EndingScreen::EndingScreen()
+EndingScreen::EndingScreen(std::shared_ptr<TextureManager> textureManager, std::shared_ptr<SoundManager> soundManager)
+    : Screen(textureManager, soundManager)
 {
 
 }

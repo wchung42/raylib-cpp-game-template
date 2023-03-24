@@ -12,15 +12,18 @@ void Game::initialize()
     // Initialize window
 	m_window.raylib::Window::Init(m_windowWidth, m_windowHeight, m_title);
 	
+    // Initialize resource managers
+    m_textureManager = std::make_shared<TextureManager>();
+    m_soundManager = std::make_shared<SoundManager>();
+
     // Setup and init first screen
     m_currentScreen = LOGO;
-    m_screen = std::make_unique<LogoScreen>();
+    m_screen = std::make_unique<LogoScreen>(m_textureManager, m_soundManager);
 
     m_window.SetTargetFPS(m_targetFPS);       // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
 }
-
 
 void Game::runLoop()
 {
@@ -102,19 +105,19 @@ void Game::changeToScreen(GameScreen screen)
     {
         case LOGO: 
         {
-            m_screen = std::make_unique<LogoScreen>();
+            m_screen = std::make_unique<LogoScreen>(m_textureManager, m_soundManager);
         } break;
         case TITLE:
         {
-            m_screen = std::make_unique<TitleScreen>();
+            m_screen = std::make_unique<TitleScreen>(m_textureManager, m_soundManager);
         } break;
         case GAMEPLAY: 
         {
-            m_screen = std::make_unique<GameplayScreen>();
+            m_screen = std::make_unique<GameplayScreen>(m_textureManager, m_soundManager);
         } break;
         case ENDING: 
         {
-            m_screen = std::make_unique<EndingScreen>();
+            m_screen = std::make_unique<EndingScreen>(m_textureManager, m_soundManager);
         } break;
         default: break;
     }
@@ -149,19 +152,19 @@ void Game::updateTransition()
             {
                 case LOGO:
                 {
-                    m_screen = std::make_unique<LogoScreen>();
+                    m_screen = std::make_unique<LogoScreen>(m_textureManager, m_soundManager);
                 } break;
                 case TITLE:
                 {
-                    m_screen = std::make_unique<TitleScreen>();
+                    m_screen = std::make_unique<TitleScreen>(m_textureManager, m_soundManager);
                 } break;
                 case GAMEPLAY:
                 {
-                    m_screen = std::make_unique<GameplayScreen>();
+                    m_screen = std::make_unique<GameplayScreen>(m_textureManager, m_soundManager);
                 } break;
                 case ENDING:
                 {
-                    m_screen = std::make_unique<EndingScreen>();
+                    m_screen = std::make_unique<EndingScreen>(m_textureManager, m_soundManager);
                 } break;
                 default: break;
             }
